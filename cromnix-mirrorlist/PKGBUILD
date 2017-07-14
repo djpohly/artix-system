@@ -2,9 +2,9 @@
 # Maintainer: Dan McGee <dan@archlinux.org>
 
 pkgname=cromnix-mirrorlist
-pkgver=20170709
+pkgver=20170715
 pkgrel=1
-pkgdesc="Arch Linux mirror list for use by pacman"
+pkgdesc="Artix mirror list for use by pacman"
 arch=('any')
 url="https://www.cromnix.org/mirrorlist/"
 license=('GPL')
@@ -13,18 +13,7 @@ conflicts=('pacman-mirrorlist')
 replaces=('pacman-mirrorlist')
 backup=(etc/pacman.d/mirrorlist)
 source=(mirrorlist)
-sha256sums=('2bcbeec9f019adbee085d378664fd629d30b4d206c5d8cf0b299570162c06faf')
-
-# NOTE on building this package:
-# * Go to the trunk/ directory
-# * Run bash -c ". PKGBUILD; updatelist"
-# * Update the checksums, update pkgver
-# * Build the package
-
-# updatelist() {
-#   rm -f mirrorlist
-#   curl -o mirrorlist https://www.cromnix.org/mirrorlist/all/
-# }
+sha256sums=('64e1f26642118ca7335c24195512da04cc58fabe5fb789c8a72b80f0a42f4d14')
 
 package() {
   mkdir -p $pkgdir/etc/pacman.d
