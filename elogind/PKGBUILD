@@ -1,0 +1,71 @@
+# Maintainer: artoo <artoo@manjaro.org>
+
+pkgbase=elogind
+pkgname=('elogind' 'libelogind')
+pkgver=231.4
+pkgrel=3
+pkgdesc="The systemd project's logind, extracted to a standalone package"
+arch=('i686' 'x86_64' 'armv7h')
+url="https://github.com/elogind/elogind"
+license=('GPL' 'LGPL2.1')
+makedepends=('intltool' 'libtool' 'gperf' 'gtk-doc' 'polkit' 'dbus')
+options=('!libtool')
+source=("${pkgbase}-${pkgver}.tar.gz::https://github.com/elogind/elogind/archive/v${pkgver}.tar.gz")
+sha256sums=('6a7118abb696d6fd046bb4bbfcbc7bd415770792e6577417d9deb0bcbc4ee8ff')
+
+prepare() {
+    cd ${pkgbase}-${pkgver}
+    ./autogen.sh
+}
+
+build() {
+    cd ${pkgbase}-${pkgver}
+    intltoolize
+    ./configure \
+        --sysconfdir=/etc \
+        --prefix=/usr \
+        --libdir=/usr/lib \
+        --libexecdir=/usr/lib \
+        --enable-split-usr \
+        --enable-polkit \
+        --disable-smack \
+        --enable-acl \
+        --enable-pam \
+        --with-rootlibdir=/usr/lib \
+        --with-udevrulesdir=/usr/lib/udev/rules.d \
+        --with-cgroup-controller=openrc \
+        --disable-kdbus
+    make
+}
+
+package_elogind() {
+    pkgdesc="The systemd project's logind, extracted to a standalone package"
+#     groups=('base')
+    provides=("elogind=${pkgver}")
+    depends=('acl' 'pam' 'libeudev')
+    conflicts=('consolekit')
+    optdepends=('elogind-openrc: elogind initscript'
+                'polkit: polkit support')
+
+    cd ${pkgbase}-${pkgver}
+    make DESTDIR="${pkgdir}" install
+
+    mkdir ${srcdir}/_libelogind
+    mv -v ${pkgdir}/usr/lib/pkgconfig ${srcdir}/_libelogind
+    mv -v ${pkgdir}/usr/include/ ${srcdir}/_libelogind
+    mv -v ${pkgdir}/usr/lib/libelogind*.so* ${srcdir}/_libelogind
+}
+
+package_libelogind(){
+    pkgdesc="elogind client libraries"
+    groups=('base-devel')
+    provides=('libelogind.so' "libelogind=${pkgver}")
+    depends=('libcap')
+
+    cd ${pkgbase}-${pkgver}
+
+    install -dm755 ${pkgdir}/usr/lib
+    mv ${srcdir}/_libelogind/include ${pkgdir}/usr
+    mv ${srcdir}/_libelogind/pkgconfig ${pkgdir}/usr/lib
+    mv ${srcdir}/_libelogind/libelogind*.so* ${pkgdir}/usr/lib
+}
