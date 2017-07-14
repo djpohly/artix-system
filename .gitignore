@@ -1,0 +1,8 @@
+*.pkg.tar.xz
+*.log
+*.sig
+*.gz
+*.xz
+*.tar
+*.bz
+*.zip
