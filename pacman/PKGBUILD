@@ -5,14 +5,14 @@
 
 pkgname=pacman
 pkgver=5.0.2
-pkgrel=5
+pkgrel=6
 pkgdesc="A library-based package manager with dependency support"
 arch=('i686' 'x86_64')
 url="http://www.archlinux.org/pacman/"
 license=('GPL')
 groups=('base' 'base-devel')
-depends=('bash' 'glibc' 'libarchive' 'curl' 'gpgme' 'cromnix-mirrorlist'
-        'archlinux-mirrorlist' 'archlinux-keyring' 'cromnix-keyring')
+depends=('bash' 'glibc' 'libarchive' 'curl' 'gpgme' 'artix-mirrorlist'
+        'archlinux-mirrorlist' 'archlinux-keyring' 'artix-keyring')
 makedepends=('asciidoc')
 checkdepends=('python2' 'fakechroot')
 provides=('pacman-contrib')
