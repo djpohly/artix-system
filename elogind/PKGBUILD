@@ -2,16 +2,16 @@
 
 pkgbase=elogind
 pkgname=('elogind' 'libelogind')
-pkgver=231.4
-pkgrel=3
+pkgver=232.3
+pkgrel=1
 pkgdesc="The systemd project's logind, extracted to a standalone package"
 arch=('i686' 'x86_64' 'armv7h')
 url="https://github.com/elogind/elogind"
 license=('GPL' 'LGPL2.1')
-makedepends=('intltool' 'libtool' 'gperf' 'gtk-doc' 'polkit' 'dbus')
+makedepends=('intltool' 'libtool' 'gperf' 'gtk-doc' 'polkit' 'dbus' 'eudev')
 options=('!libtool')
 source=("${pkgbase}-${pkgver}.tar.gz::https://github.com/elogind/elogind/archive/v${pkgver}.tar.gz")
-sha256sums=('6a7118abb696d6fd046bb4bbfcbc7bd415770792e6577417d9deb0bcbc4ee8ff')
+sha256sums=('6e1064fdc648e7ebe0aadbcc3c2b4e41f85fec08713dbca3faa5c156f8c76bbc')
 
 prepare() {
     cd ${pkgbase}-${pkgver}
@@ -33,16 +33,14 @@ build() {
         --enable-pam \
         --with-rootlibdir=/usr/lib \
         --with-udevrulesdir=/usr/lib/udev/rules.d \
-        --with-cgroup-controller=openrc \
-        --disable-kdbus
+        --with-cgroup-controller=openrc
     make
 }
 
 package_elogind() {
     pkgdesc="The systemd project's logind, extracted to a standalone package"
-#     groups=('base')
     provides=("elogind=${pkgver}")
-    depends=('acl' 'pam' 'libeudev')
+    depends=('acl' 'pam' 'eudev')
     conflicts=('consolekit')
     optdepends=('elogind-openrc: elogind initscript'
                 'polkit: polkit support')
