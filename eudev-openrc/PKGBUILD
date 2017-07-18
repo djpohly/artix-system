@@ -8,7 +8,7 @@ _sed_args+=(-e 's|#!/sbin/openrc-run|#!/usr/bin/openrc-run|g')
 
 pkgname=eudev-openrc
 pkgver=32
-pkgrel=3
+pkgrel=4
 pkgdesc="OpenRC eudev startup scripts"
 arch=('any')
 url="https://github.com/cromnix/artix"
@@ -16,8 +16,8 @@ license=('GPL2')
 # groups=('base')
 provides=('udev-openrc')
 depends=('kmod-openrc' 'eudev')
-# conflicts=('systemd-sysvcompat' 'udev-openrc')
-# replaces=('udev-openrc')
+conflicts=('systemd-sysvcompat' 'udev-openrc')
+replaces=('udev-openrc')
 source=("${_url}/${_pkgname}-${pkgver}.tar.gz")
 sha256sums=('d5ae437291ae140194f67fec2c9a6ceeda39708433840e7b4b0361cc5ae53eaa')
 

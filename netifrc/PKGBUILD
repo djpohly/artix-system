@@ -10,7 +10,7 @@ _func_ver=0.12
 
 pkgname=netifrc
 pkgver=0.5.1
-pkgrel=4
+pkgrel=5
 pkgdesc="Gentoo Network Interface Management Scripts"
 arch=('i686' 'x86_64' 'armv7h')
 url="http://www.gentoo.org/proj/en/base/openrc/"
@@ -25,9 +25,9 @@ source=("${pkgname}-${pkgver}.tar.gz::${_net_url}/${pkgver}.tar.gz"
 sha256sums=('3d737efb3258ac4a32c745cb2378017402ae4da48bdd356c11845965b0184ee5'
             '4a6ddb1d8be7b52aae68761fb26546663b6b0e74b155df263cddfbfa72373965')
 
-_id=cromnix
-if [ -f /etc/os-release ]; then
-    . /etc/os-release
+_id=artix
+if [ -f /usr/lib/os-release ]; then
+    . /usr/lib/os-release
     _id=$ID
 fi
 _net_args=(SYSCONFDIR=/etc PREFIX=/usr SBINDIR=/usr/bin LIBEXECDIR=/usr/lib/${pkgname})

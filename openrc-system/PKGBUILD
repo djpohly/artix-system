@@ -32,7 +32,7 @@ pkgname=(
         'xinetd-openrc'
         'kmod-openrc'
 )
-pkgver=20170712
+pkgver=20170717
 pkgrel=1
 pkgdesc="OpenRC init scripts"
 arch=('any')
