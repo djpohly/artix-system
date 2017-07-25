@@ -2,7 +2,7 @@
 
 pkgbase=elogind
 pkgname=('elogind' 'libelogind')
-pkgver=232.3
+pkgver=233.4
 pkgrel=1
 pkgdesc="The systemd project's logind, extracted to a standalone package"
 arch=('i686' 'x86_64' 'armv7h')
@@ -11,7 +11,7 @@ license=('GPL' 'LGPL2.1')
 makedepends=('intltool' 'libtool' 'gperf' 'gtk-doc' 'polkit' 'dbus' 'eudev')
 options=('!libtool')
 source=("${pkgbase}-${pkgver}.tar.gz::https://github.com/elogind/elogind/archive/v${pkgver}.tar.gz")
-sha256sums=('6e1064fdc648e7ebe0aadbcc3c2b4e41f85fec08713dbca3faa5c156f8c76bbc')
+sha256sums=('7fd0f86487c6c44e6c3b7f610c7853c863937728a343a803fd53cf031bb74493')
 
 prepare() {
     cd ${pkgbase}-${pkgver}
@@ -40,7 +40,7 @@ build() {
 package_elogind() {
     pkgdesc="The systemd project's logind, extracted to a standalone package"
     provides=("elogind=${pkgver}")
-    depends=('acl' 'pam' 'eudev')
+    depends=('acl' 'pam' 'dbus' 'eudev')
     conflicts=('consolekit')
     optdepends=('elogind-openrc: elogind initscript'
                 'polkit: polkit support')
