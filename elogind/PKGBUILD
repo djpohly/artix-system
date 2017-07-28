@@ -1,8 +1,8 @@
-# Maintainer: artoo <artoo@manjaro.org>
+# Maintainer: artoo <artoo@cromnix.org>
 
 pkgbase=elogind
 pkgname=('elogind' 'libelogind')
-pkgver=233.4
+pkgver=234.2
 pkgrel=1
 pkgdesc="The systemd project's logind, extracted to a standalone package"
 arch=('i686' 'x86_64' 'armv7h')
@@ -11,7 +11,7 @@ license=('GPL' 'LGPL2.1')
 makedepends=('intltool' 'libtool' 'gperf' 'gtk-doc' 'polkit' 'dbus' 'eudev')
 options=('!libtool')
 source=("${pkgbase}-${pkgver}.tar.gz::https://github.com/elogind/elogind/archive/v${pkgver}.tar.gz")
-sha256sums=('7fd0f86487c6c44e6c3b7f610c7853c863937728a343a803fd53cf031bb74493')
+sha256sums=('c6ff702caa91a3d92ecb56a1ba65cb654878545c19c0318f7e22385b16d2c9a3')
 
 prepare() {
     cd ${pkgbase}-${pkgver}
@@ -33,6 +33,7 @@ build() {
         --enable-pam \
         --with-rootlibdir=/usr/lib \
         --with-udevrulesdir=/usr/lib/udev/rules.d \
+        --with-rootlibexecdir=/usr/lib \
         --with-cgroup-controller=openrc
     make
 }
