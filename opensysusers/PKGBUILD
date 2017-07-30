@@ -1,13 +1,13 @@
 # Maintainer: Chris Cromer <chris@cromer.cl>
 
-_url="https://github.com/arch-openrc/opensysusers/archive"
+_url="https://github.com/artix-linux/opensysusers/archive"
 
 pkgname=opensysusers
 pkgver=0.2
-pkgrel=2
+pkgrel=3
 pkgdesc="A standalone utility for handling systemd-style sysusers.d users and groups"
 arch=('any')
-url="https://github.com/arch-openrc/opensysusers"
+url="https://github.com/artix-linux/opensysusers"
 license=('BSD2')
 groups=('base')
 depends=('openrc')
