@@ -13,32 +13,32 @@ license=('BSD2')
 groups=('base')
 # depends=('openrc')
 depends=('pacman')
-backup=('etc/conf.d/opentmpfiles-dev'
-        'etc/conf.d/opentmpfiles-setup')
+# backup=('etc/conf.d/opentmpfiles-dev'
+#         'etc/conf.d/opentmpfiles-setup')
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz"
         'opentmpfiles.hook')
 sha256sums=('1fdd4587c62d815296fb4162002cf001e3ed7aae8727d9b4360f527169e6b3be'
             'ee73e6f2fa67ed3b994bd962645185e42cb035deaeeb8783e150894b5fa0a861')
 
-_inst_initd(){
-    install -Dm755 openrc/$1.initd ${pkgdir}/etc/init.d/$1
-}
-
-_inst_confd(){
-    install -Dm755 openrc/$1.confd ${pkgdir}/etc/conf.d/$1
-
-    sed "${_sed_args[@]}" -i ${pkgdir}/etc/conf.d/$1
-}
+# _inst_initd(){
+#     install -Dm755 openrc/$1.initd ${pkgdir}/etc/init.d/$1
+# }
+#
+# _inst_confd(){
+#     install -Dm755 openrc/$1.confd ${pkgdir}/etc/conf.d/$1
+#
+#     sed "${_sed_args[@]}" -i ${pkgdir}/etc/conf.d/$1
+# }
 
 package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     make bindir="/usr/bin" DESTDIR="${pkgdir}" install
 
-    for f in opentmpfiles-dev opentmpfiles-setup; do
-        _inst_confd "$f"
-        _inst_initd "$f"
-    done
+#     for f in opentmpfiles-dev opentmpfiles-setup; do
+#         _inst_confd "$f"
+#         _inst_initd "$f"
+#     done
 
 #     install -dm755 ${pkgdir}/etc/runlevels/{boot,sysinit}
 #     ln -snf "/etc/init.d/opentmpfiles-dev" "${pkgdir}/etc/runlevels/sysinit/opentmpfiles-dev"
