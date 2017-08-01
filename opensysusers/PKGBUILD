@@ -1,0 +1,29 @@
+# Maintainer: Chris Cromer <chris@cromer.cl>
+
+_url="https://github.com/artix-linux/opensysusers/archive"
+
+pkgname=opensysusers
+pkgver=0.2.1
+pkgrel=2
+pkgdesc="A standalone utility for handling systemd-style sysusers.d users and groups"
+arch=('any')
+url="https://github.com/artix-linux/opensysusers"
+license=('BSD2')
+groups=('base')
+# depends=('openrc')
+depends=('pacman')
+source=("${pkgname}-${pkgver}.tar.gz::${_url}/${pkgver}.tar.gz"
+		'opensysusers.hook')
+sha256sums=('1cbd13df62eeea65ad65e8abf5c7025929dbdc5a33be9ad6b19850bf54ab58f1'
+            '90fdf362a29138f1ed65e86e8b97d1251adb6b2e94d829cceb0094a63d00252a')
+
+package() {
+	cd "${srcdir}/${pkgname}-${pkgver}"
+	make bindir="/usr/bin" DESTDIR="${pkgdir}" install
+#	install -vDm0755 openrc/opensysusers.initd "${pkgdir}"/etc/init.d/opensysusers
+	install -vDm0644 "${srcdir}"/opensysusers.hook "${pkgdir}/usr/share/libalpm/hooks/opensysusers.hook"
+
+	ln -snf "/usr/bin/sysusers" "${pkgdir}/usr/bin/systemd-sysusers"
+# 	install -dm0755 "${pkgdir}/etc/runlevels/boot"
+# 	ln -snf "/etc/init.d/opensysusers" "${pkgdir}/etc/runlevels/boot/opensysusers"
+}
