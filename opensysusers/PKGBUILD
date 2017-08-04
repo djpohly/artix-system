@@ -3,8 +3,8 @@
 _url="https://github.com/artix-linux/opensysusers/archive"
 
 pkgname=opensysusers
-pkgver=0.2.1
-pkgrel=5
+pkgver=0.3.0
+pkgrel=1
 pkgdesc="A standalone utility for handling systemd-style sysusers.d users and groups"
 arch=('any')
 url="https://github.com/artix-linux/opensysusers"
@@ -13,7 +13,7 @@ license=('BSD2')
 # depends=('openrc')
 source=("${pkgname}-${pkgver}.tar.gz::${_url}/${pkgver}.tar.gz"
 		'opensysusers.hook')
-sha256sums=('1cbd13df62eeea65ad65e8abf5c7025929dbdc5a33be9ad6b19850bf54ab58f1'
+sha256sums=('156975bcca935b284a9bd2b53999073fffdce349724daf742494f4b49a6a31eb'
             '90fdf362a29138f1ed65e86e8b97d1251adb6b2e94d829cceb0094a63d00252a')
 
 package() {
