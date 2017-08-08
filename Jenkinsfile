@@ -1,8 +1,8 @@
 node {
-    stage 'Checkout' {
+    stage('Checkout') {
         checkout scm
     }
-    stage 'Build' {
+    stage('Build') {
         sh "for pkg in *; do buildpkg -u -x -z system -p $pkg || true; done"
     }
 }
