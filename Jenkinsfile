@@ -6,3 +6,4 @@ node {
         sh "/var/lib/jenkins/build.sh"
     }
 }
+
