@@ -3,12 +3,12 @@
 # Contributor: Tom Gundersen <teg@jklm.no>
 
 pkgname=filesystem
-pkgver=2017.07
-pkgrel=4
+pkgver=2017.08
+pkgrel=1
 pkgdesc='Base Artix Linux files'
 arch=('i686' 'x86_64')
 license=('GPL')
-url='https://www.cromnix.org'
+url='https://github.com/artix-linux'
 groups=('base')
 install='filesystem.install'
 makedepends=('asciidoc')
@@ -19,14 +19,14 @@ backup=('etc/fstab' 'etc/crypttab' 'etc/group' 'etc/hosts' 'etc/ld.so.conf' 'etc
 source=('group' 'issue' 'nsswitch.conf' 'securetty' 'host.conf' 'ld.so.conf'
         'passwd' 'shadow' 'fstab' 'crypttab' 'hosts' 'motd' 'os-release' 'resolv.conf'
         'shells' 'gshadow' 'profile' 'artix.7.txt' 'locale.sh')
-sha256sums=('dfe0c11898f7bb57ef8fdc4177606c5275e9fa334317897b505631d5e0d58b64'
+sha256sums=('faed5839ed5e6797d7fc67f7fc0b003554d32250f3ae2d3241603c70cdc646b0'
             'ad4a548be178f1ed23a339cf317f998b8a8ded4d77509f451f55ebd4fbc26539'
             'e9fd66742e96d16f4a244a3037522467c12e301f8e1337cda61eb67b78198534'
             'f7b38167196943d8fb9d2e75358c7262d5fe1082b257c4c8caffe3b6de429cb5'
             'f21f35e7d3083aeee19beb48478130d119b2572922a4889df98326d551540eda'
             '00d5d103837480d26cd350753382c3211df6bc304ee59ffaab130fad108f6a86'
-            '7516c0529c6dcdc7351092c79e16567d7f6aea58df90fe48d34b3814c4108f5f'
-            'bdf92c2a97996eb1b3be24090ca94100f16232290010a7395e44c5c92bd38027'
+            'a55259d43b287c35ee94c736f79eea68c72318e67e5f7b8c0a6dfbcf0d4fee13'
+            '34b820ca01b9ad7e4792e92122b39e891e647c016b7ecccb220d6f4e72eee5c7'
             '86dff00854a7f2280bb799484ccc39ad449a171448926880742ae64f41666a43'
             '4e298e0ec247c3bb09157f5598127f6ecb779f5ec018ab69ba4678f361bdaae3'
             '13d1f59c1d0860bf43da996e2b9a6ab2744791614241ed9a1376b7e7e30de3a8'
@@ -34,7 +34,7 @@ sha256sums=('dfe0c11898f7bb57ef8fdc4177606c5275e9fa334317897b505631d5e0d58b64'
             'b0da4b8c5ad08e114c938b1c153e746dc46a949e86da5a39a90649e846fd7506'
             '74d2be3dd69600bcf0da751a1804a386bf4ad143b76d79c336acaa5c600e7991'
             '6cff886fe9e23096d5f67b7857a747ebaf10431be5a2afc40236de5ad13a654f'
-            '009f08bc24ae8356a1a4f10e4d1a132c6bf2e4fcc8ba71e39dc76960a2733a86'
+            '33d4bec57c59f378e79ed8f3e4387e65fdd5cfd3d551d7cb015f7cf5cfad72f5'
             '839587d27eb5caa7f0431fa3ba542f0e63f3aa80b10baa26f34285ed702dc43b'
             'c1351263bebe63777b1112675c6c67eb3fc9292af382f877d3a8e71df8bdcbad'
             '331805ff85b80ae2444be58740f1cf41be56fb6e254e930677f1e36e8f95bee1')

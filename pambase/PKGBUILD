@@ -2,10 +2,11 @@
 # Maintainer: Dave Reisner <dreisner@archlinux.org>
 
 pkgname=pambase
-pkgver=20170706
+pkgver=20170803
 pkgrel=1
 pkgdesc="Base PAM configuration for services"
 arch=('any')
+depends=('opensysusers')
 url="http://www.archlinux.org"
 license=('GPL')
 source=('system-auth'
