@@ -1,6 +1,6 @@
 ##
-## Cromnix repository mirrorlist
-## Generated on 2017-07-08
+## Artix Linux repository mirrorlist
+## Generated on 2017-08-18
 ##
 
 ## Worldwide
@@ -29,3 +29,4 @@ Server = https://jaist.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$ar
 Server = https://ncu.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$arch
 Server = https://nchc.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$arch
 Server = https://vorboss.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$arch
+Server = https://mirrors.dotsrc.org/artix-linux/repos/$repo/os/$arch
