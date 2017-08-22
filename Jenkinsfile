@@ -1,11 +1,12 @@
 node {
     stage('Checkout') {
         checkout scm
+        sh "create_build_queue.sh"
     }
     stage('Build') {
-        sh "/var/lib/jenkins/build.sh"
+        sh "build_queue.sh"
     }
     stage('Repo') {
-        sh "/var/lib/jenkins/repo.sh"
+        sh "repo.sh"
     }
 }
