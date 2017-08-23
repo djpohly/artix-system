@@ -22,7 +22,7 @@ pipeline {
                         fi
                     done
                 '''
-                }
+            }
             post {
                 success {
                     steps {
