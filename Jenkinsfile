@@ -7,7 +7,7 @@ pipeline {
                     GIT_COMMIT=$(git rev-parse HEAD)
                     DEST=$(git show --pretty=format: --name-only "${GIT_COMMIT}")
                     TMP=${JOB_NAME%/*}
-                    POOL_NAME="${TMP#*/}"
+                    POOL_NAME=${TMP#*/}
                     REPO_NAME=${POOL_NAME}
                     [[ ${BRANCH_NAME} == "testing" ]] && REPO_NAME=${REPO_NAME}-${BRANCH_NAME}
                     for f in ${DEST[@]};do
@@ -21,7 +21,7 @@ pipeline {
                             echo  "buildpkg -p ${PACKAGE} -cuslx -z ${REPO_NAME}"
                         fi
                     done
-                '''
+                    '''
             }
             post {
                 success {
@@ -30,7 +30,7 @@ pipeline {
                             for pkg in ${DEPLOY[@]};do
                                 echo "deploypkg -x -p ${pkg}-${VERSION}-${RELEASE}-${ARCH}.${EXT} -r ${REPO_NAME}"
                             done
-                        '''
+                            '''
                     }
                 }
             }
