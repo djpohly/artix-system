@@ -50,7 +50,7 @@ pipeline {
         RELEASE = ''
         DEPLOY = ''
         EXT = 'pkg.tar.xz'
-        POOL_DIR=${JENKINS_HOME} + '/artools-workspace/pkg'
-        REPO_DIR=${JENKINS_HOME} + '/artools-workspace/repos'
+        POOL_DIR="${JENKINS_HOME}" + '/artools-workspace/pkg'
+        REPO_DIR="${JENKINS_HOME}" + '/artools-workspace/repos'
     }
 }
