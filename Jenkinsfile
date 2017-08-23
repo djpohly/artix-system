@@ -18,7 +18,7 @@ pipeline {
                             VERSION=$pkgver
                             RELEASE=$pkgrel
                             DEPLOY=(${pkgname[@]})
-                            echo  "buildpkg -p ${PACKAGE} -cuslx -z ${REPO_NAME}"
+                            buildpkg -p ${PACKAGE} -cuslx -z ${REPO_NAME}
                         fi
                     done
                 '''
@@ -27,7 +27,8 @@ pipeline {
                 success {
                     sh '''
                         for pkg in ${DEPLOY[@]};do
-                            echo "deploypkg -x -p ${pkg}-${VERSION}-${RELEASE}-${ARCH}.${EXT} -r ${REPO_NAME}"
+                            FILE=${pkg}-${VERSION}-${RELEASE}-${ARCH}.${EXT}
+                            deploypkg -x -p ${FILE} -r ${REPO_NAME}
                         done
                     '''
                 }
