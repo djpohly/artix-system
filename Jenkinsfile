@@ -1,13 +1,13 @@
 pipeline {
-    agent any
-    stages {
-        stage('Build') {
-            steps {
-                sh '''
+  agent any
+  stages {
+    stage('Build') {
+      steps {
+        sh '''
                     GIT_COMMIT=$(git rev-parse HEAD)
                     DEST=$(git show --pretty=format: --name-only "${GIT_COMMIT}")
-                    echo "${JOB_NAME}"
-                    echo "${JOB_BASE_NAME}
+                    echo ${JOB_NAME}
+                    echo ${JOB_BASE_NAME}
                     POOL_NAME=${JOB_NAME#*/}
                     REPO_NAME=${POOL_NAME}
                     [[ ${BRANCH_NAME} == "testing" ]] && REPO_NAME=${REPO_NAME}-${BRANCH_NAME}
@@ -18,18 +18,20 @@ pipeline {
                         fi
                     done
                     '''
-            }
-            post {
-                success {
-                    echo 'success'
-                }
-            }
+      }
+      post {
+        success {
+          echo 'success'
+          
         }
+        
+      }
     }
-    environment {
-        GIT_COMMIT = ''
-        DEST = ''
-        PACKAGE = ''
-        REPO_NAME = ''
-    }
+  }
+  environment {
+    GIT_COMMIT = ''
+    DEST = ''
+    PACKAGE = ''
+    REPO_NAME = ''
+  }
 }
