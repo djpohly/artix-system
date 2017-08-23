@@ -14,11 +14,15 @@ pipeline {
                         if [[ $f == */PKGBUILD ]];then
                             PACKAGE=${f%/PKGBUILD}
                             source $f
-                            ARCH=$arch
+                            ARCH=$CARCH
+                            POOL_DIR=${POOL_DIR}/${ARCH}/${POOL_NAME}
+                            REPO_DIR=${REPO_DIR}/${REPO_NAME}
+                            [[ ! -d ${REPO_DIR} ]] && mkdir -p ${REPO_DIR}
+                            [[ $arch == 'any' ]] && ARCH='any'
                             VERSION=$pkgver
                             RELEASE=$pkgrel
                             DEPLOY=(${pkgname[@]})
-                            buildpkg -p ${PACKAGE} -cuslx -z ${REPO_NAME}
+                            buildpkg -p ${PACKAGE} -cu -z ${REPO_NAME}
                         fi
                     done
                 '''
@@ -28,6 +32,7 @@ pipeline {
                     sh '''
                         for pkg in ${DEPLOY[@]};do
                             FILE=${pkg}-${VERSION}-${RELEASE}-${ARCH}.${EXT}
+                            signfile ${POOL_DIR}/${FILE}
                             deploypkg -x -p ${FILE} -r ${REPO_NAME}
                         done
                     '''
@@ -45,5 +50,7 @@ pipeline {
         RELEASE = ''
         DEPLOY = ''
         EXT = 'pkg.tar.xz'
+        POOL_DIR=${JENKINS_HOME}/artools-workspace/pkg
+        REPO_DIR=${JENKINS_HOME}/artools-workspace/repos
     }
 }
