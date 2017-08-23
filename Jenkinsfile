@@ -17,7 +17,7 @@ pipeline {
                     ARCH=${arch}
                     VERSION=${pkgver}
                     RELEASE=${pkgrel}
-                    DEPLOY=( ${pkgname[@]} )
+                    DEPLOY=${pkgname[@]}
                     echo  "buildpkg -p ${PACKAGE} -cuslx -z ${REPO_NAME}"
                 fi
             done
