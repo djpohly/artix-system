@@ -1,9 +1,9 @@
 pipeline {
-    agent any
-    stages {
-        stage('Build') {
-            steps {
-                sh '''
+  agent any
+  stages {
+    stage('Build') {
+      steps {
+        sh '''
                     GIT_COMMIT=$(git rev-parse HEAD)
                     DEST=$(git show --pretty=format: --name-only "${GIT_COMMIT}")
                     TMP=${JOB_NAME%/*}
@@ -22,29 +22,32 @@ pipeline {
                         fi
                     done
                     '''
-            }
-            post {
-                success {
-                    steps {
-                        sh '''
+      }
+      post {
+        success {
+          steps() {
+            sh '''
                             for pkg in ${DEPLOY[@]};do
                                 echo "deploypkg -x -p ${pkg}-${VERSION}-${RELEASE}-${ARCH}.${EXT} -r ${REPO_NAME}"
                             done
                             '''
-                    }
-                }
-            }
+          }
+          
+          
         }
+        
+      }
     }
-    environment {
-        GIT_COMMIT = ''
-        DEST = ''
-        PACKAGE = ''
-        REPO_NAME = ''
-        ARCH = ''
-        VERSION = ''
-        RELEASE = ''
-        DEPLOY = ''
-        EXT = 'pkg.tar.xz'
-    }
+  }
+  environment {
+    GIT_COMMIT = ''
+    DEST = ''
+    PACKAGE = ''
+    REPO_NAME = ''
+    ARCH = ''
+    VERSION = ''
+    RELEASE = ''
+    DEPLOY = ''
+    EXT = 'pkg.tar.xz'
+  }
 }
