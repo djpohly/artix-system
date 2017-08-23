@@ -11,13 +11,15 @@ pipeline {
                     REPO_NAME=${POOL_NAME}
                     [[ ${BRANCH_NAME} == 'testing' ]] && REPO_NAME=${REPO_NAME}-${BRANCH_NAME}
                     for f in ${DEST[@]};do
-                        if [[ $f != 'Jenkinsfile' ]];then
+                        if [[ $f = 'Jenkinsfile' ]];then
+                            echo 'Not a valid build!'
+                         else
                             if [[ $f == */PKGBUILD ]];then
                                 PACKAGE=${f%/PKGBUILD}
                                 source $f
-                                ARCH=${arch}
-                                VERSION=${pkgver}
-                                RELEASE=${pkgrel}
+                                ARCH=$arch
+                                VERSION=$pkgver
+                                RELEASE=$pkgrel
                                 DEPLOY=(${pkgname[@]})
                                 echo  "buildpkg -p ${PACKAGE} -cuslx -z ${REPO_NAME}"
                             fi
