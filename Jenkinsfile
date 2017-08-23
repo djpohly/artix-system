@@ -1,12 +1,37 @@
-node {
-    stage('Checkout') {
-        checkout scm
-        sh "/home/jenkins/workspace/create_build_queue.sh"
-    }
+pipeline {
+  agent any
+  stages {
     stage('Build') {
-        sh "/home/jenkins/workspace/build_queue.sh"
+      steps {
+        sh '''
+                    GIT_COMMIT=$(git rev-parse HEAD)
+                    DEST=$(git show --pretty=format: --name-only "${GIT_COMMIT}")
+                    echo ${JOB_NAME}
+                    echo ${JOB_BASE_NAME}
+                    POOL_NAME=${JOB_NAME#*/}
+                    REPO_NAME=${POOL_NAME}
+                    [[ ${BRANCH_NAME} == "testing" ]] && REPO_NAME=${REPO_NAME}-${BRANCH_NAME}
+                    for f in ${DEST[@]};do
+                        if [[ $f == */PKGBUILD ]];then
+                            PACKAGE=${f%/PKGBUILD}
+                            echo  "buildpkg -p ${PACKAGE} -cuslx -z ${REPO_NAME}"
+                        fi
+                    done
+                    '''
+      }
+      post {
+        success {
+          echo 'success'
+          
+        }
+        
+      }
     }
-    stage('Repo') {
-        sh "/home/jenkins/workspace/repo.sh"
-    }
+  }
+  environment {
+    GIT_COMMIT = ''
+    DEST = ''
+    PACKAGE = ''
+    REPO_NAME = ''
+  }
 }
