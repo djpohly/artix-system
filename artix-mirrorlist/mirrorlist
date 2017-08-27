@@ -5,6 +5,10 @@
 
 ## Worldwide
 Server = https://netcologne.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$arch
+Server = https://mirrors.dotsrc.org/artix-linux/repos/$repo/os/$arch
+Server = https://artix.mief.nl/repos/$repo/os/$arch
+Server = http://mirror.strits.dk/artix-linux/repos/$repo/os/$arch
+Server = http://178.254.30.161/artix-linux/repos/$repo/os/$arch
 Server = https://freefr.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$arch
 Server = https://10gbps-io.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$arch
 Server = https://netix.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$arch
@@ -29,4 +33,3 @@ Server = https://jaist.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$ar
 Server = https://ncu.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$arch
 Server = https://nchc.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$arch
 Server = https://vorboss.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$arch
-Server = https://mirrors.dotsrc.org/artix-linux/repos/$repo/os/$arch
