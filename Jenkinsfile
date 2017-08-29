@@ -31,6 +31,8 @@ pipeline {
                 '''
                 script {
                     repo = readFile('repo.txt')
+                }
+                script {
                     package = readFile('package.txt')
                 }
             }
