@@ -31,6 +31,7 @@ pipeline {
             post {
                 success {
                     sh '''
+                        printenv
                         if [[ -n ${PACKAGE} ]];then
                             deploypkg -p ${PACKAGE} -r ${REPO_NAME} -x
                         fi
@@ -38,5 +39,9 @@ pipeline {
                 }
             }
         }
+    }
+    enivironment {
+        REPO_NAME = ''
+        PACKAGE = ''
     }
 }
