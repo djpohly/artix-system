@@ -30,10 +30,8 @@ pipeline {
                     echo ${PACKAGE} > package.txt
                 '''
                 script {
-                    repo = readFile('repo.txt')
-                }
-                script {
-                    package = readFile('package.txt')
+                    def repo = readFile('repo.txt')
+                    def package = readFile('package.txt')
                 }
             }
             post {
