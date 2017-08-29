@@ -29,10 +29,10 @@ pipeline {
                     echo ${REPO_NAME} > repo.txt
                     echo ${PACKAGE} > package.txt
                 '''
-                script {
+            }
+            script {
                     def repo = readFile('repo.txt')
                     def package = readFile('package.txt')
-                }
             }
             post {
                 success {
