@@ -26,21 +26,23 @@ pipeline {
                             ${CMD} -p ${PACKAGE} -u -z ${REPO_NAME}
                         fi
                     done
+                    echo ${REPO_NAME} > repo.txt
+                    echo ${PACKAGE} > package.txt
                 '''
+                script {
+                    repo = readFile('repo.txt')
+                    package = readFile('package.txt')
+                }
             }
             post {
                 success {
                     sh '''
-                        if [[ -n ${PACKAGE} ]];then
-                            deploypkg -p ${PACKAGE} -r ${REPO_NAME} -x
+                        if [[ -n ${package} ]];then
+                            deploypkg -p ${package} -r ${repo} -x
                         fi
                     '''
                 }
             }
         }
-    }
-    environment {
-        REPO_NAME = ''
-        PACKAGE = ''
     }
 }
