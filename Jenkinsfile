@@ -29,7 +29,6 @@ pipeline {
             environment {
                 CMD = readFile('cmd.txt')
                 REPO_NAME = readFile('repo.txt')
-                DEPLOY = ''
             }
             steps {
                 sh '''
