@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('Prepare') {
             steps {
                 sh '''
                     GIT_COMMIT=$(git rev-parse HEAD)
@@ -20,7 +20,18 @@ pipeline {
                             CMD="buildpkg-testing"
                         ;;
                     esac
+                    echo ${CMD} > cmd.txt
                     echo ${REPO_NAME} > repo.txt
+                '''
+            }
+        }
+        stage('Build') {
+            environment {
+                CMD = readFile('cmd.txt')
+                REPO_NAME = readFile('repo.txt')
+            }
+            steps {
+                sh '''
                     PACKAGE='none'
                     for f in ${DEST[@]};do
                         if [[ $f == */PKGBUILD ]];then
@@ -34,13 +45,13 @@ pipeline {
         }
         stage('Deloyment') {
             environment {
-                PKG = readFile('package.txt')
-                REPO = readFile('repo.txt')
+                PACKAGE = readFile('package.txt')
+                REPO_NAME = readFile('repo.txt')
             }
             steps {
                 sh '''
-                    if [[ ${PKG} != 'none' ]]; then
-                        echo "deploypkg -p ${PKG} -r ${REPO} -x"
+                    if [[ ${PACKAGE} != 'none' ]]; then
+                        echo "deploypkg -p ${PKG} -r ${REPO_NAME} -x"
                     fi
                 '''
             }
