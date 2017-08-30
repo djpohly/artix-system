@@ -1,7 +1,7 @@
 #!/bin/groovy
 
-def PACKAGE = 'none'
-def REPO_NAME = 'system'
+def PACKAGE
+def REPO_NAME
 
 pipeline {
     agent any
@@ -11,6 +11,8 @@ pipeline {
                 sh '''
                     GIT_COMMIT=$(git rev-parse HEAD)
                     DEST=$(git show --pretty=format: --name-only ${GIT_COMMIT})
+                    REPO_NAME='system'
+                    PACKAGE='none'
                     case ${BRANCH_NAME} in
                         'testing'|'staging')
                             REPO_NAME=${REPO_NAME}-${BRANCH_NAME}
