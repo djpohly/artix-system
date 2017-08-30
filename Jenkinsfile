@@ -34,13 +34,13 @@ pipeline {
                     def build = readFile("build.txt")
                 }
             }
-            post {
-                success {
-                    sh '''
-                        echo "${build}"
-                        echo "deploypkg -p ${package} -r ${repo} -x"
-                    '''
-                }
+        }
+        stage('Deloyment') {
+            steps {
+                sh '''
+                    echo "${build}"
+                    echo "deploypkg -p ${package} -r ${repo} -x"
+                '''
             }
         }
     }
