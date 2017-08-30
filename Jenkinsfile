@@ -42,6 +42,9 @@ pipeline {
                     echo ${PACKAGE} > package.txt
                 '''
             }
+            environment {
+                PACKAGE = readFile('package.txt')
+            }
             post {
                 success {
                     sh '''
