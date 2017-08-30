@@ -5,7 +5,7 @@ pipeline {
             steps {
                 sh '''
                     GIT_COMMIT=$(git rev-parse HEAD)
-                    DEST=$(git show --pretty=format: --name-only ${GIT_COMMIT})
+                    GIT_FILES=$(git show --pretty=format: --name-only ${GIT_COMMIT})
                     REPO_NAME='system'
                     case ${BRANCH_NAME} in
                         'testing'|'staging')
@@ -33,7 +33,7 @@ pipeline {
             steps {
                 sh '''
                     PACKAGE='none'
-                    for f in ${DEST[@]};do
+                    for f in ${GIT_FILES[@]};do
                         if [[ $f == */PKGBUILD ]];then
                             PACKAGE=${f%/PKGBUILD}
                             ${CMD} -p ${PACKAGE} -u -z ${REPO_NAME}
@@ -41,17 +41,17 @@ pipeline {
                     done
                     echo ${PACKAGE} > package.txt
                 '''
+                script {
+                    PACKAGE = readFile('package.txt')
+                }
             }
             post {
                 success {
-                    script {
-                        DEPLOY = readFile('package.txt')
-                    }
                     sh '''
-                        echo ${DEPLOY}
                         echo ${REPO_NAME}
-                        if [[ ${DEPLOY} != 'none' ]]; then
-                            deploypkg -p ${DEPLOY} -r ${REPO_NAME} -x
+                        echo ${PACKAGE}
+                        if [[ ${PACKAGE} != 'none' ]]; then
+                            deploypkg -p ${PACKAGE} -r ${REPO_NAME} -x
                         fi
                     '''
                 }
