@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        PKG = 'none'
+        REPO = 'system'
+    }
     stages {
         stage('Build') {
             steps {
@@ -27,20 +31,25 @@ pipeline {
                             ${CMD} -p ${PACKAGE} -u -z ${REPO_NAME}
                         fi
                     done
-                    echo "${REPO_NAME}" > build.txt
-                    echo "${PACKAGE}" >> build.txt
                 '''
                 script {
-                    build = readFile('build.txt')
+                    def package = "${PACKAGE}"
+                    withEnv(['PKG=' + package]) {
+                        sh "echo ${PKG}"
+                    }
                 }
-                echo "${build}"
+                script {
+                    def repo = "${REPO_NAME}"
+                    withEnv(['REPO=' + repo]) {
+                        sh "echo ${REPO}"
+                    }
+                }
             }
         }
         stage('Deloyment') {
             steps {
-                echo "${build}"
                 sh '''
-                    echo "deploypkg -p ${package} -r ${repo} -x"
+                    echo "deploypkg -p ${PKG} -r ${REPO} -x"
                 '''
             }
         }
