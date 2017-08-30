@@ -32,13 +32,15 @@ pipeline {
                 '''
                 script {
                     def build = readFile("build.txt")
-                    for (int i = 0; i < build.size(); ++i) {
-                    echo ${i}
-                    }
                 }
             }
             post {
                 success {
+                    script {
+                        for (int i = 0; i < build.size(); ++i) {
+                        echo ${i}
+                        }
+                    }
                     sh '''
                         echo "deploypkg -p ${package} -r ${repo} -x"
                     '''
