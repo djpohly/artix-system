@@ -8,6 +8,7 @@ pipeline {
                     DEST=$(git show --pretty=format: --name-only ${GIT_COMMIT})
                     REPO_NAME='system'
                     PACKAGE=''
+                    echo ${WORKSPACE}
                     case ${BRANCH_NAME} in
                         'testing'|'staging')
                             REPO_NAME=${REPO_NAME}-${BRANCH_NAME}
@@ -27,10 +28,10 @@ pipeline {
                             ${CMD} -p ${PACKAGE} -u -z ${REPO_NAME}
                         fi
                     done
-                    echo "${REPO_NAME}" > repo.txt
+                    echo "${REPO_NAME}" > ${WORKSPACE}/repo.txt
                 '''
                 script {
-                    repo = readFile('repo.txt')
+                    repo = readFile("${WORKSPACE}/repo.txt")
                 }
             }
             post {
