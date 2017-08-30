@@ -31,9 +31,9 @@ pipeline {
                     echo "${PACKAGE}" >> build.txt
                 '''
                 script {
-                    build = readFile("build.txt")
-                    for (entry in build.split("\r?\n")) {
-                    echo ${entry}
+                    def build = readFile("build.txt")
+                    for (int i = 0; i < build.size(); ++i) {
+                    echo ${i}
                     }
                 }
             }
