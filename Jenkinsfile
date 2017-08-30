@@ -11,7 +11,6 @@ pipeline {
                     GIT_COMMIT=$(git rev-parse HEAD)
                     DEST=$(git show --pretty=format: --name-only ${GIT_COMMIT})
                     REPO_NAME='system'
-                    PACKAGE='none'
                     case ${BRANCH_NAME} in
                         'testing'|'staging')
                             REPO_NAME=${REPO_NAME}-${BRANCH_NAME}
@@ -25,6 +24,8 @@ pipeline {
                             CMD="buildpkg-testing"
                         ;;
                     esac
+                    echo ${REPO_NAME} > repo.txt
+                    PACKAGE='none'
                     for f in ${DEST[@]};do
                         if [[ $f == */PKGBUILD ]];then
                             PACKAGE=${f%/PKGBUILD}
@@ -33,17 +34,19 @@ pipeline {
                     done
                     echo ${PACKAGE} > package.txt
                 '''
-                script {
-                    PKG = readFile('package.txt')
-                    withEnv(['PKG=' + PKG]) {
-                        sh "echo $PKG"
-                    }
-                }
             }
         }
         stage('Deloyment') {
             steps {
-                sh "echo deploypkg -p ${PKG} -r ${REPO} -x"
+                script {
+                    PKG = readFile('package.txt')
+                    REPO = readFile('repo.txt')
+                }
+                sh '''
+                    if [[ ${PKG} != 'none' ]]; then
+                        echo "deploypkg -p ${PKG} -r ${REPO} -x"
+                    fi
+                '''
             }
         }
     }
