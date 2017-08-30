@@ -29,10 +29,10 @@ pipeline {
             environment {
                 CMD = readFile('cmd.txt')
                 REPO_NAME = readFile('repo.txt')
+                PACKAGE = 'none'
             }
             steps {
                 sh '''
-                    PACKAGE='none'
                     for f in ${DEST[@]};do
                         if [[ $f == */PKGBUILD ]];then
                             PACKAGE=${f%/PKGBUILD}
@@ -42,11 +42,9 @@ pipeline {
                     echo ${PACKAGE} > package.txt
                 '''
             }
-            environment {
-                PACKAGE = readFile('package.txt')
-            }
             post {
                 success {
+                    PACKAGE = readFile('package.txt')
                     sh '''
                         if [[ ${PACKAGE} != 'none' ]]; then
                             echo "deploypkg -p ${PACKAGE} -r ${REPO_NAME} -x"
