@@ -37,9 +37,7 @@ pipeline {
         }
         stage('Deloyment') {
             steps {
-                sh '''
-                    echo "deploypkg -p ${PACKAGE} -r ${REPO_NAME} -x"
-                '''
+                sh "echo deploypkg -p ${PACKAGE} -r ${REPO_NAME} -x"
             }
         }
     }
