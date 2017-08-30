@@ -27,20 +27,18 @@ pipeline {
                             ${CMD} -p ${PACKAGE} -u -z ${REPO_NAME}
                         fi
                     done
-                    echo "${REPO_NAME}" > build.txt
-                    echo "${PACKAGE}" >> build.txt
+                    echo "${REPO_NAME}" > repo.txt
+                    echo "${PACKAGE}" > package.txt
                 '''
                 script {
-                    def build = readFile("build.txt")
+                    def repo = readFile("repo.txt")
+                    def package = readFile("package.txt")
                 }
             }
             post {
                 success {
-                    script {
-                        for (int i = 0; i < build.size(); ++i) {
-                        echo ${i}
-                        }
-                    }
+                    echo ${repo}
+                    echo ${package}
                     sh '''
                         echo "deploypkg -p ${package} -r ${repo} -x"
                     '''
