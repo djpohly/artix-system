@@ -34,7 +34,7 @@ pipeline {
                     echo ${PACKAGE} > package.txt
                 '''
                 script {
-                    package = readFile 'package.txt'
+                    package = readFile('package.txt')
                     withEnv(['PKG=' + package]) {
                         sh "echo $PKG"
                     }
