@@ -36,8 +36,8 @@ pipeline {
             }
             post {
                 success {
-                    echo ${build}
                     sh '''
+                        echo "${build}"
                         echo "deploypkg -p ${package} -r ${repo} -x"
                     '''
                 }
