@@ -1,9 +1,5 @@
 pipeline {
     agent any
-    environment {
-        PKG = ''
-        REPO = ''
-    }
     stages {
         stage('Build') {
             steps {
@@ -37,11 +33,11 @@ pipeline {
             }
         }
         stage('Deloyment') {
+            environment {
+                PKG = readFile('package.txt')
+                REPO = readFile('repo.txt')
+            }
             steps {
-                script {
-                    PKG = readFile('package.txt')
-                    REPO = readFile('repo.txt')
-                }
                 sh '''
                     if [[ ${PKG} != 'none' ]]; then
                         echo "deploypkg -p ${PKG} -r ${REPO} -x"
