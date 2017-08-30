@@ -37,8 +37,6 @@ pipeline {
                     withEnv(['PKG=' + package]) {
                         sh "echo ${PKG}"
                     }
-                }
-                script {
                     def repo = "${REPO_NAME}"
                     withEnv(['REPO=' + repo]) {
                         sh "echo ${REPO}"
