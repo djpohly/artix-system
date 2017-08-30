@@ -33,12 +33,12 @@ pipeline {
                     done
                     echo ${PACKAGE} > package.txt
                 '''
-            }
-            script {
-                    package = readFile('package.txt')
-                    withEnv(['PKG=' + package]) {
+                script {
+                    PKG = readFile('package.txt')
+                    withEnv(['PKG=' + PKG]) {
                         sh "echo $PKG"
                     }
+                }
             }
         }
         stage('Deloyment') {
