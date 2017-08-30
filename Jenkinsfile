@@ -1,7 +1,7 @@
 #!/bin/groovy
 
-def PACKAGE
-def REPO_NAME
+def PKG
+def REPO
 
 pipeline {
     agent any
@@ -33,11 +33,15 @@ pipeline {
                         fi
                     done
                 '''
+                script {
+                    PKG = $PACKAGE
+                    REPO = $REPO_NAME
+                }
             }
         }
         stage('Deloyment') {
             steps {
-                sh "echo deploypkg -p ${PACKAGE} -r ${REPO_NAME} -x"
+                sh "echo deploypkg -p ${PKG} -r ${REPO} -x"
             }
         }
     }
