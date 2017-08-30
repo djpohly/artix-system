@@ -1,17 +1,16 @@
+#!/bin/groovy
+
+def PACKAGE = 'none'
+def REPO_NAME = 'system'
+
 pipeline {
     agent any
-    environment {
-        PKG = 'none'
-        REPO = 'system'
-    }
     stages {
         stage('Build') {
             steps {
                 sh '''
                     GIT_COMMIT=$(git rev-parse HEAD)
                     DEST=$(git show --pretty=format: --name-only ${GIT_COMMIT})
-                    REPO_NAME='system'
-                    PACKAGE='none'
                     case ${BRANCH_NAME} in
                         'testing'|'staging')
                             REPO_NAME=${REPO_NAME}-${BRANCH_NAME}
@@ -32,22 +31,12 @@ pipeline {
                         fi
                     done
                 '''
-                script {
-                    def package = PACKAGE
-                    withEnv(['PKG=' + package]) {
-                        sh "echo ${PKG}"
-                    }
-                    def repo = REPO_NAME
-                    withEnv(['REPO=' + repo]) {
-                        sh "echo ${REPO}"
-                    }
-                }
             }
         }
         stage('Deloyment') {
             steps {
                 sh '''
-                    echo "deploypkg -p ${PKG} -r ${REPO} -x"
+                    echo "deploypkg -p ${PACKAGE} -r ${REPO_NAME} -x"
                 '''
             }
         }
