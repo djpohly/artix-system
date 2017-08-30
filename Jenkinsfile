@@ -29,14 +29,16 @@ pipeline {
                     echo ${REPO_NAME} > repo.txt
                     echo ${PACKAGE} > package.txt
                 '''
-            }
-            script {
-                    def repo = readFile('repo.txt')
-                    def package = readFile('package.txt')
+                script {
+                    repo = readFile('repo.txt')
+                    package = readFile('package.txt')
+                }
             }
             post {
                 success {
                     sh '''
+                        echo ${repo}
+                        echo ${package}
                         if [[ -n ${package} ]];then
                             deploypkg -p ${package} -r ${repo} -x
                         fi
