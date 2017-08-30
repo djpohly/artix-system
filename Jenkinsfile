@@ -27,18 +27,16 @@ pipeline {
                             ${CMD} -p ${PACKAGE} -u -z ${REPO_NAME}
                         fi
                     done
-                    echo "${REPO_NAME}" > repo.txt
-                    echo "${PACKAGE}" > package.txt
+                    echo "${REPO_NAME}" > build.txt
+                    echo "${PACKAGE}" >> build.txt
                 '''
             }
             post {
                 success {
                     script {
-                        repo = readFile("repo.txt")
-                        package = readFile("package.txt")
+                        build = readFile("build.txt")
                     }
-                    echo ${repo}
-                    echo ${package}
+                    echo ${build}
                     sh '''
                         echo "deploypkg -p ${package} -r ${repo} -x"
                     '''
