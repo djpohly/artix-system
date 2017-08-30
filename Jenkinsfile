@@ -33,11 +33,11 @@ pipeline {
                     done
                 '''
                 script {
-                    package = "${PACKAGE}"
+                    def package = PACKAGE
                     withEnv(['PKG=' + package]) {
                         sh "echo ${PKG}"
                     }
-                    repo = "${REPO_NAME}"
+                    def repo = REPO_NAME
                     withEnv(['REPO=' + repo]) {
                         sh "echo ${REPO}"
                     }
