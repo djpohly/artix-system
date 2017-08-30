@@ -1,14 +1,9 @@
-#!/bin/groovy
-
-def PKG
-def REPO
-
 pipeline {
-    agent any
-    stages {
-        stage('Build') {
-            steps {
-                sh '''
+  agent any
+  stages {
+    stage('Build') {
+      steps {
+        sh '''
                     GIT_COMMIT=$(git rev-parse HEAD)
                     DEST=$(git show --pretty=format: --name-only ${GIT_COMMIT})
                     REPO_NAME='system'
@@ -33,16 +28,17 @@ pipeline {
                         fi
                     done
                 '''
-                script {
-                    PKG = PACKAGE
-                    REPO = REPO_NAME
-                }
-            }
+        script {
+          PKG = "${PACKAGE}"
+          REPO = "${REPO_NAME}"
         }
-        stage('Deloyment') {
-            steps {
-                sh "echo deploypkg -p ${PKG} -r ${REPO} -x"
-            }
-        }
+        
+      }
     }
+    stage('Deloyment') {
+      steps {
+        sh '"echo deploypkg -p ${PKG} -r ${REPO} -x"'
+      }
+    }
+  }
 }
