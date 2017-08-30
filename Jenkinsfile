@@ -32,7 +32,7 @@ pipeline {
                 '''
                 script {
                     build = readFile("build.txt")
-                    for (entry : build.split("\r?\n")) {
+                    for (entry in build.split("\r?\n")) {
                     echo ${entry}
                     }
                 }
