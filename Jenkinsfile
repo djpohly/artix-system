@@ -44,12 +44,14 @@ pipeline {
             }
             post {
                 success {
-                    PACKAGE = readFile('package.txt')
-                    sh '''
-                        if [[ ${PACKAGE} != 'none' ]]; then
-                            echo "deploypkg -p ${PACKAGE} -r ${REPO_NAME} -x"
-                        fi
-                    '''
+                    steps {
+                        PACKAGE = readFile('package.txt')
+                        sh '''
+                            if [[ ${PACKAGE} != 'none' ]]; then
+                                echo "deploypkg -p ${PACKAGE} -r ${REPO_NAME} -x"
+                            fi
+                        '''
+                    }
                 }
             }
         }
