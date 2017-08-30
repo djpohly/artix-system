@@ -22,6 +22,13 @@ pipeline {
                     esac
                     echo ${CMD} > cmd.txt
                     echo ${REPO_NAME} > repo.txt
+                    PACKAGE='none'
+                    for f in ${GIT_FILES[@]};do
+                        if [[ $f == */PKGBUILD ]];then
+                            PACKAGE=${f%/PKGBUILD}
+                        fi
+                    done
+                    echo ${PACKAGE} > package.txt
                 '''
             }
         }
@@ -29,21 +36,14 @@ pipeline {
             environment {
                 CMD = readFile('cmd.txt')
                 REPO_NAME = readFile('repo.txt')
+                PACKAGE = readFile('package.txt')
             }
             steps {
                 sh '''
-                    PACKAGE='none'
-                    for f in ${GIT_FILES[@]};do
-                        if [[ $f == */PKGBUILD ]];then
-                            PACKAGE=${f%/PKGBUILD}
-                            ${CMD} -p ${PACKAGE} -u -z ${REPO_NAME}
-                        fi
-                    done
-                    echo ${PACKAGE} > package.txt
+                    if [[ ${PACKAGE} != 'none' ]]; then
+                        ${CMD} -p ${PACKAGE} -u -z ${REPO_NAME}
+                    fi
                 '''
-                script {
-                    PACKAGE = readFile('package.txt')
-                }
             }
             post {
                 success {
