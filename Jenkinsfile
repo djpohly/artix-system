@@ -29,10 +29,11 @@ pipeline {
             environment {
                 CMD = readFile('cmd.txt')
                 REPO_NAME = readFile('repo.txt')
-                PACKAGE = 'none'
+                DEPLOY = ''
             }
             steps {
                 sh '''
+                    PACKAGE = 'none'
                     for f in ${DEST[@]};do
                         if [[ $f == */PKGBUILD ]];then
                             PACKAGE=${f%/PKGBUILD}
@@ -45,13 +46,13 @@ pipeline {
             post {
                 success {
                     script {
-                        PACKAGE = readFile('package.txt')
+                        DEPLOY = readFile('package.txt')
                     }
                     sh '''
-                        echo ${PACKAGE}
+                        echo ${DEPLOY}
                         echo ${REPO_NAME}
-                        if [[ ${PACKAGE} != 'none' ]]; then
-                            deploypkg -p ${PACKAGE} -r ${REPO_NAME} -x
+                        if [[ ${DEPLOY} != 'none' ]]; then
+                            deploypkg -p ${DEPLOY} -r ${REPO_NAME} -x
                         fi
                     '''
                 }
