@@ -33,7 +33,7 @@ pipeline {
             }
             steps {
                 sh '''
-                    PACKAGE = 'none'
+                    PACKAGE='none'
                     for f in ${DEST[@]};do
                         if [[ $f == */PKGBUILD ]];then
                             PACKAGE=${f%/PKGBUILD}
