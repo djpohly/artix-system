@@ -32,11 +32,13 @@ pipeline {
                 '''
                 script {
                     build = readFile("build.txt")
+                    for (entry : build.split("\r?\n")) {
+                    echo ${entry}
+                    }
                 }
             }
             post {
                 success {
-                    echo ${build}
                     sh '''
                         echo "deploypkg -p ${package} -r ${repo} -x"
                     '''
