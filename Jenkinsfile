@@ -7,7 +7,7 @@ pipeline {
                     GIT_COMMIT=$(git rev-parse HEAD)
                     DEST=$(git show --pretty=format: --name-only ${GIT_COMMIT})
                     REPO_NAME='system'
-                    PACKAGE=''
+                    PACKAGE='none'
                     case ${BRANCH_NAME} in
                         'testing'|'staging')
                             REPO_NAME=${REPO_NAME}-${BRANCH_NAME}
@@ -28,19 +28,18 @@ pipeline {
                         fi
                     done
                     echo "${REPO_NAME}" > repo.txt
+                    echo "${PACKAGE}" > package.txt
                 '''
-                script {
-                    repo = readFile("repo.txt")
-                }
-                echo "${repo}"
             }
             post {
                 success {
                     script {
                         repo = readFile("repo.txt")
+                        package = readFile("package.txt")
                     }
+                    echo ${repo}
+                    echo ${package}
                     sh '''
-                        echo ${repo}
                         echo "deploypkg -p ${package} -r ${repo} -x"
                     '''
                 }
