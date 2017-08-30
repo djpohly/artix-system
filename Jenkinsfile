@@ -1,9 +1,13 @@
 pipeline {
-  agent any
-  stages {
-    stage('Build') {
-      steps {
-        sh '''
+    agent any
+    environment {
+        PKG = ''
+        REPO = ''
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh '''
                     GIT_COMMIT=$(git rev-parse HEAD)
                     DEST=$(git show --pretty=format: --name-only ${GIT_COMMIT})
                     REPO_NAME='system'
@@ -27,18 +31,20 @@ pipeline {
                             ${CMD} -p ${PACKAGE} -u -z ${REPO_NAME}
                         fi
                     done
+                    echo ${PACKAGE} > package.txt
                 '''
-        script {
-          PKG = "$PACKAGE"
-          REPO = "$REPO_NAME"
+                script {
+                    def package = readFile 'package.txt'
+                    withEnv(['PKG=' + package]) {
+                        sh "echo $PKG"
+                    }
+                }
+            }
         }
-        
-      }
+        stage('Deloyment') {
+            steps {
+                sh "echo deploypkg -p ${PKG} -r ${REPO} -x"
+            }
+        }
     }
-    stage('Deloyment') {
-      steps {
-        sh '"echo deploypkg -p ${PKG} -r ${REPO} -x"'
-      }
-    }
-  }
 }
