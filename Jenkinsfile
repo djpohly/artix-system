@@ -42,6 +42,21 @@ pipeline {
                     echo ${PACKAGE} > package.txt
                 '''
             }
+            post {
+                success {
+                    environment {
+                        PACKAGE = readFile('package.txt')
+                        REPO_NAME = readFile('repo.txt')
+                    }
+                    steps {
+                        sh '''
+                            if [[ ${PACKAGE} != 'none' ]]; then
+                                echo "deploypkg -p ${PACKAGE} -r ${REPO_NAME} -x"
+                            fi
+                        '''
+                    }
+                }
+            }
         }
         stage('Deloyment') {
             environment {
@@ -51,7 +66,7 @@ pipeline {
             steps {
                 sh '''
                     if [[ ${PACKAGE} != 'none' ]]; then
-                        echo "deploypkg -p ${PKG} -r ${REPO_NAME} -x"
+                        echo "deploypkg -p ${PACKAGE} -r ${REPO_NAME} -x"
                     fi
                 '''
             }
