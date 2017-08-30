@@ -29,8 +29,8 @@ pipeline {
                     done
                 '''
         script {
-          PKG = "${PACKAGE}"
-          REPO = "${REPO_NAME}"
+          PKG = "$PACKAGE"
+          REPO = "$REPO_NAME"
         }
         
       }
