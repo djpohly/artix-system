@@ -30,13 +30,13 @@ pipeline {
                     echo "${REPO_NAME}" > build.txt
                     echo "${PACKAGE}" >> build.txt
                 '''
-                script {
-                    def build = readFile("build.txt")
-                }
             }
         }
         stage('Deloyment') {
             steps {
+                script {
+                    def build = readFile("build.txt")
+                }
                 sh '''
                     echo "${build}"
                     echo "deploypkg -p ${package} -r ${repo} -x"
