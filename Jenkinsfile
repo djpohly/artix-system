@@ -6,7 +6,7 @@ pipeline {
                 sh '''
                     GIT_COMMIT=$(git rev-parse HEAD)
                     GIT_COMMIT_FILES=$(git show --pretty=format: --name-only ${GIT_COMMIT})
-                    echo "GIT_COMMIT_FILES: ${GIT_COMMIT_FILES}"
+                    echo "GIT_COMMIT_FILES: ${GIT_COMMIT_FILES[@]}"
                     REPO='system'
                     case ${BRANCH_NAME} in
                         'testing'|'staging')
@@ -23,7 +23,7 @@ pipeline {
                     esac
                     echo ${BUILDPKG} > cmd.txt
                     echo ${REPO} > repo.txt
-                    PACKAGE='none'
+                    PACKAGE=none
                     for f in ${GIT_COMMIT_FILES[@]};do
                         echo "tracked changed file: $f"
                         if [[ "$f" == */PKGBUILD ]];then
@@ -45,7 +45,8 @@ pipeline {
                 sh '''
                     echo "REPO: ${REPO}"
                     echo "PACKAGE: ${PACKAGE}"
-                    if [[ "${PACKAGE}" != "none" ]]; then
+                    echo "BUILDPKG: ${BUILDPKG}"
+                    if [[ "${PACKAGE}" != none ]]; then
                         ${BUILDPKG} -p ${PACKAGE} -u -z ${REPO}
                     fi
                 '''
@@ -55,7 +56,7 @@ pipeline {
                     sh '''
                         echo "REPO: ${REPO}"
                         echo "PACKAGE: ${PACKAGE}"
-                        if [[ "${PACKAGE}" != "none" ]]; then
+                        if [[ "${PACKAGE}" != none ]]; then
                             deploypkg -p ${PACKAGE} -r ${REPO} -x
                         fi
                     '''
