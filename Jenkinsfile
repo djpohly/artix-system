@@ -42,19 +42,11 @@ pipeline {
                 PACKAGE = readFile('package.txt')
             }
             steps {
-                sh '''
-                    if [ "$PACKAGE" != "none" ]; then
-                        ${BUILDPKG} -p ${PACKAGE} -u -z ${REPO}
-                    fi
-                '''
+                sh "[[ $PACKAGE == none ]] ||  ${BUILDPKG} -u -p ${PACKAGE} -z ${REPO}"
             }
             post {
                 success {
-                    sh '''
-                        if [ "$PACKAGE" != "none" ]; then
-                            deploypkg -p ${PACKAGE} -r ${REPO} -x
-                        fi
-                    '''
+                    sh "[[ $PACKAGE != none ]] || deploypkg -x -p ${PACKAGE} -r ${REPO}"
                 }
             }
         }
