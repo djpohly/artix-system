@@ -10,23 +10,21 @@ pipeline {
                     case ${BRANCH_NAME} in
                         'testing'|'staging')
                             REPO_NAME=${REPO_NAME}-${BRANCH_NAME}
-                            CMD="buildpkg-${BRANCH_NAME}"
+                            BUILDPKG="buildpkg-${BRANCH_NAME}"
                         ;;
                         'master')
-                            CMD="buildpkg"
+                            BUILDPKG="buildpkg"
                         ;;
                         PR-*)
                             REPO_NAME=${REPO_NAME}-testing
-                            CMD="buildpkg-testing"
+                            BUILDPKG="buildpkg-testing"
                         ;;
                     esac
-                    echo ${CMD} > cmd.txt
+                    echo ${BUILDPKG} > cmd.txt
                     echo ${REPO_NAME} > repo.txt
                     PACKAGE='none'
                     for f in ${GIT_COMMIT_FILES[@]};do
-                        if [[ $f == */PKGBUILD ]];then
-                            PACKAGE=${f%/PKGBUILD}
-                        fi
+                        [[ $f == */PKGBUILD ]] && PACKAGE=${f%/PKGBUILD}
                     done
                     echo ${PACKAGE} > package.txt
                 '''
@@ -34,7 +32,7 @@ pipeline {
         }
         stage('Build') {
             environment {
-                CMD = readFile('cmd.txt')
+                BUILDPKG = readFile('cmd.txt')
                 REPO_NAME = readFile('repo.txt')
                 PACKAGE = readFile('package.txt')
             }
@@ -43,7 +41,7 @@ pipeline {
                     echo "REPO_NAME: ${REPO_NAME}"
                     echo "PACKAGE: ${PACKAGE}"
                     if [[ "${PACKAGE}" != 'none' ]]; then
-                        ${CMD} -p ${PACKAGE} -u -z ${REPO_NAME}
+                        ${BUILDPKG} -p ${PACKAGE} -u -z ${REPO_NAME}
                     fi
                 '''
             }
