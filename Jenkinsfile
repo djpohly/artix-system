@@ -43,7 +43,7 @@ pipeline {
             }
             steps {
                 sh '''
-                    if [[ $PACKAGE != none ]]; then
+                    if [ "$PACKAGE" != "none" ]; then
                         ${BUILDPKG} -p ${PACKAGE} -u -z ${REPO}
                     fi
                 '''
@@ -51,7 +51,7 @@ pipeline {
             post {
                 success {
                     sh '''
-                        if [[ $PACKAGE != none ]]; then
+                        if [ "$PACKAGE" != "none" ]; then
                             deploypkg -p ${PACKAGE} -r ${REPO} -x
                         fi
                     '''
