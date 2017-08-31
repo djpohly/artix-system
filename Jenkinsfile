@@ -23,7 +23,7 @@ pipeline {
                     esac
                     echo ${BUILDPKG} > cmd.txt
                     echo ${REPO} > repo.txt
-                    PACKAGE=''
+                    PACKAGE=none
                     for f in ${GIT_COMMIT_FILES[@]};do
                         echo "tracked changed file: $f"
                         if [[ "$f" == */PKGBUILD ]];then
@@ -43,10 +43,7 @@ pipeline {
             }
             steps {
                 sh '''
-                    echo "REPO: ${REPO}"
-                    echo "PACKAGE: ${PACKAGE}"
-                    echo "BUILDPKG: ${BUILDPKG}"
-                    if [[ -n "${PACKAGE}" ]]; then
+                    if [[ $PACKAGE != none ]]; then
                         ${BUILDPKG} -p ${PACKAGE} -u -z ${REPO}
                     fi
                 '''
@@ -54,9 +51,7 @@ pipeline {
             post {
                 success {
                     sh '''
-                        echo "REPO: ${REPO}"
-                        echo "PACKAGE: ${PACKAGE}"
-                        if [[ -n "${PACKAGE}" ]]; then
+                        if [[ $PACKAGE != none ]]; then
                             deploypkg -p ${PACKAGE} -r ${REPO} -x
                         fi
                     '''
