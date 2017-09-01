@@ -49,7 +49,7 @@ pipeline {
             post {
                 success {
                     sh '''
-                        [[ $PACKAGE != none ]] || deploypkg -x -p ${PACKAGE} -r ${REPO}
+                        [[ $PACKAGE == none ]] || deploypkg -x -p ${PACKAGE} -r ${REPO}
                     '''
                 }
             }
