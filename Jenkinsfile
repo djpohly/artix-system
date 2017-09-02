@@ -1,39 +1,55 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('Prepare') {
             steps {
                 sh '''
                     GIT_COMMIT=$(git rev-parse HEAD)
-                    DEST=$(git show --pretty=format: --name-only ${GIT_COMMIT})
-                    REPO_NAME='system'
+                    GIT_COMMIT_FILES=$(git show --pretty=format: --name-only ${GIT_COMMIT})
+                    echo "GIT_COMMIT_FILES: ${GIT_COMMIT_FILES[@]}"
+                    REPO='system'
                     case ${BRANCH_NAME} in
                         'testing'|'staging')
-                            REPO_NAME=${REPO_NAME}-${BRANCH_NAME}
-                            CMD="buildpkg-${BRANCH_NAME}"
+                            REPO=${REPO}-${BRANCH_NAME}
+                            BUILDPKG="buildpkg-${BRANCH_NAME}"
                         ;;
                         'master')
-                            CMD="buildpkg"
+                            BUILDPKG="buildpkg"
                         ;;
                         PR-*)
-                            REPO_NAME=${REPO_NAME}-testing
-                            CMD="buildpkg-testing"
+                            REPO=${REPO}-testing
+                            BUILDPKG="buildpkg-testing"
                         ;;
                     esac
-                    for f in ${DEST[@]};do
-                        if [[ $f == */PKGBUILD ]];then
+                    echo ${BUILDPKG} > cmd.txt
+                    echo ${REPO} > repo.txt
+                    PACKAGE=none
+                    for f in ${GIT_COMMIT_FILES[@]};do
+                        echo "tracked changed file: $f"
+                        if [[ "$f" == */PKGBUILD ]];then
                             PACKAGE=${f%/PKGBUILD}
-                            ${CMD} -p ${PACKAGE} -u -z ${REPO_NAME}
+                            echo ${PACKAGE}
                         fi
                     done
+                    echo ${PACKAGE} > package.txt
+                '''
+            }
+        }
+        stage('Build') {
+            environment {
+                BUILDPKG = readFile('cmd.txt')
+                REPO = readFile('repo.txt')
+                PACKAGE = readFile('package.txt')
+            }
+            steps {
+                sh '''
+                    ${BUILDPKG} -u -p ${PACKAGE} -z ${REPO}
                 '''
             }
             post {
                 success {
                     sh '''
-                        if [[ -n ${PACKAGE} ]];then
-                            deploypkg -p ${PACKAGE} -r ${REPO_NAME} -x
-                        fi
+                        deploypkg -x -p ${PACKAGE} -r ${REPO}
                     '''
                 }
             }
