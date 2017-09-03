@@ -43,7 +43,7 @@ pipeline {
             }
             steps {
                 sh '''
-                    ${BUILDPKG} -u -p ${PACKAGE} -z ${REPO}
+                    ${BUILDPKG} -p ${PACKAGE} -z ${REPO}
                 '''
             }
             post {
