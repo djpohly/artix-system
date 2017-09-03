@@ -5,7 +5,7 @@
 
 pkgname=binutils
 pkgver=2.29.0
-pkgrel=2
+pkgrel=1
 _commit=dd9a28c0966d13924fbd1096a724ae334954d830
 pkgdesc='A set of programs to assemble and manipulate binary and object files'
 arch=(i686 x86_64)
@@ -55,7 +55,7 @@ build() {
 
 check() {
   cd binutils-build
-
+  
   # unset LDFLAGS as testsuite makes assumptions about which ones are active
   # ignore failures in gold testsuite...
   make -k LDFLAGS="" check || true
