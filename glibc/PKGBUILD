@@ -7,8 +7,8 @@
 
 pkgname=glibc
 pkgver=2.26
-pkgrel=2
-_commit=1c9a5c270d8b66f30dcfaf1cb2d6cf39d3e18369
+pkgrel=3
+_commit=58270c0049404ef2f878fdd45df55f17f0b8c1f7
 pkgdesc='GNU C Library'
 arch=(i686 x86_64)
 url='http://www.gnu.org/software/libc'
@@ -57,7 +57,6 @@ build() {
       --with-bugurl=https://bugs.archlinux.org/ \
       --enable-add-ons \
       --enable-bind-now \
-      --enable-kernel=2.6.32 \
       --enable-lock-elision \
       --enable-multi-arch \
       --enable-obsolete-nsl \
