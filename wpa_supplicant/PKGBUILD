@@ -1,11 +1,10 @@
-# $Id$
 # Maintainer:  Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
 # Contributor: Thomas Bächler <thomas@archlinux.org>
 
 pkgname=wpa_supplicant
 pkgver=2.6
 pkgrel=8
-#epoch=1
+epoch=1
 pkgdesc='A utility providing key negotiation for WPA wireless networks'
 url='http://hostap.epitest.fi/wpa_supplicant'
 arch=(i686 x86_64)
