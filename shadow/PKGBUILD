@@ -4,7 +4,7 @@
 
 pkgname=shadow
 pkgver=4.5
-pkgrel=1
+pkgrel=2
 pkgdesc="Password and account management tool suite with support for shadow files and PAM"
 arch=('i686' 'x86_64')
 url='https://github.com/shadow-maint/shadow'
@@ -30,8 +30,18 @@ source=("git+https://github.com/shadow-maint/shadow.git#tag=$pkgver"
         passwd
         useradd.defaults
         xstrdup.patch
-        shadow-strncpy-usage.patch
-        lastlog.tmpfiles)
+        shadow-strncpy-usage.patch)
+sha1sums=('SKIP'
+          '33a6cf1e44a1410e5c9726c89e5de68b78f5f922'
+          '4ad0e059406a305c8640ed30d93c2a1f62c2f4ad'
+          '12427b1ca92a9b85ca8202239f0d9f50198b818f'
+          '0e56fed7fc93572c6bf0d8f3b099166558bb46f1'
+          'bb3509087947d08bfb6e5d1b5c033856b9146ad9'
+          '12427b1ca92a9b85ca8202239f0d9f50198b818f'
+          '611be25d91c3f8f307c7fe2485d5f781e5dee75f'
+          '9ae93de5987dd0ae428f0cc1a5a5a5cd53583f19'
+          '6010fffeed1fc6673ad9875492e1193b1a847b53'
+          '21e12966a6befb25ec123b403cd9b5c492fe5b16')
 
 pkgver() {
   cd "$pkgname"
@@ -98,9 +108,6 @@ package() {
     install -Dm644 "$srcdir/defaults.pam" "$pkgdir/etc/pam.d/$file"
   done
 
-  # lastlog log file creation
-  install -Dm644 "$srcdir/lastlog.tmpfiles" "$pkgdir/usr/lib/tmpfiles.d/lastlog.conf"
-
   # Remove evil/broken tools
   rm "$pkgdir"/usr/sbin/logoutd
 
@@ -132,15 +139,3 @@ package() {
   mv "$pkgdir"/usr/sbin/* "$pkgdir"/usr/bin
   rmdir "$pkgdir/usr/sbin"
 }
-sha256sums=('SKIP'
-            'b085972a9378ecbe6cafee1a2e9baba1082531c77376c0aa14ad6e5c7392814c'
-            'a955ecbd82a801102fad756bb98dca778c1eba14a3367c601d6237b75642c36b'
-            '7409cd2ab04592859d95986467123e356ada4e11413b314ad84e32dc24ca8c92'
-            'fc6807842f92e9d3f792d6b64a0d5aad87995a279153ab228b1b2a64d9f32f20'
-            'c80b1ac251862e35dc5ce25f27dcfeed8e9eb853c4360c147e4d0e05771dff64'
-            '7409cd2ab04592859d95986467123e356ada4e11413b314ad84e32dc24ca8c92'
-            '75428a0f016cccbd9091c012b4d6b778d6ef8d97b607849b5ba1aca0314ed75b'
-            'c74aad1f55e6acba24f7ab24f4a6696e2f35085438f3089dc552b044bc2ebe1d'
-            'b7716897579721feb9e2ccbd47639bbd72d2143cf1b9b5dabba5af1bf50bdbf9'
-            '42e0b472421192e980696ea8b0e7ba3232985146a32d35c7be7b539cc57221ad'
-            'd91ccf5ce4a8b6e3687320100419252d281d6b2a5402a0beba23d0eace641373')
