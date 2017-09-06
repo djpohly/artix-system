@@ -6,8 +6,8 @@ _udev_ver=220
 
 pkgbase=eudev
 pkgname=('eudev' 'libeudev')
-pkgver=3.2.2
-pkgrel=4
+pkgver=3.2.4
+pkgrel=1
 pkgdesc="The userspace dev tools (udev) forked by Gentoo"
 arch=('i686' 'x86_64' 'armv7h')
 url="http://www.gentoo.org/proj/en/eudev/"
@@ -19,7 +19,7 @@ source=("$pkgname-$pkgver.tar.gz::https://github.com/gentoo/eudev/archive/v${pkg
         'initcpio_install'
         'udev-hwdb.hook'
         'udev-hwdb-path.patch')
-sha256sums=('80628191448886846ab9cc0e2af6782358a0afb81d5b4f8cd9d982d2626cca31'
+sha256sums=('a68871be55aecb977ae4a206b5ce5a868a722e025f37387d1a702a409933bbeb'
             '892ce43218e0a458981bbce451252c8987dc398e60b8de288e7542b8f2409c13'
             '77dd1fd318b4456409aceb077f060b87944defb07cf39d29ad1968dc6f361875'
             'a5eb54c78494ecc05412e3719ad030f2be181c04aa507ef3e37e6a6da025af65'
@@ -54,7 +54,6 @@ build() {
 }
 
 package_eudev() {
-#     groups=('base')
     provides=("udev=${_udev_ver}")
     depends=("libeudev" 'kbd' 'kmod' 'hwids' 'util-linux')
     optdepends=('eudev-openrc: udev starup scripts for openrc')
