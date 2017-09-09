@@ -7,8 +7,7 @@
 
 pkgname=glibc
 pkgver=2.26
-pkgrel=4
-_commit=58270c0049404ef2f878fdd45df55f17f0b8c1f7
+pkgrel=3
 pkgdesc='GNU C Library'
 arch=(i686 x86_64)
 url='http://www.gnu.org/software/libc'
@@ -22,6 +21,7 @@ backup=(etc/gai.conf
         etc/nscd.conf)
 options=(!strip staticlibs)
 install=glibc.install
+_commit=58270c0049404ef2f878fdd45df55f17f0b8c1f7
 source=(git+https://sourceware.org/git/glibc.git#commit=${_commit}
         locale.gen.txt
         locale-gen
@@ -30,6 +30,11 @@ md5sums=('SKIP'
          '07ac979b6ab5eeb778d55f041529d623'
          '476e9113489f93b348b21e144b6a8fcf'
          'cbc073315c00b03898b7fc614274d6b3')
+
+# pkgver() {
+#   cd glibc
+#   git describe --tags | sed 's/^glibc-//;s/-/+/g'
+# }
 
 prepare() {
   mkdir -p glibc-build
@@ -102,7 +107,7 @@ package() {
 
   cd glibc
 
-  install -dm755 "$pkgdir"/usr/lib/{locale,systemd/system,tmpfiles.d}
+  install -dm755 "$pkgdir"/usr/lib/{locale,tmpfiles.d}
   install -m644 nscd/nscd.conf "$pkgdir/etc/nscd.conf"
   install -m644 nscd/nscd.tmpfiles "$pkgdir/usr/lib/tmpfiles.d/nscd.conf"
   install -dm755 "$pkgdir/var/db/nscd"
