@@ -3,7 +3,7 @@
 # Maintainer: artoo <artoo@artixlinux.org>
 
 pkgname=artix-mirrorlist
-pkgver=20170903
+pkgver=20170911
 pkgrel=1
 pkgdesc="Artix mirror list for use by pacman"
 arch=('any')
@@ -14,7 +14,7 @@ conflicts=('pacman-mirrorlist')
 replaces=('pacman-mirrorlist')
 backup=(etc/pacman.d/mirrorlist)
 source=(mirrorlist)
-sha256sums=('bfe65bf08d75bc3ebf50595cb73d469a49133e298ccef13af41423e0bd39b103')
+sha256sums=('81c9ae3435ace128ec59416c030f23771d35444c00cc7f29c1eeac7be9079a3e')
 
 package() {
   mkdir -p $pkgdir/etc/pacman.d

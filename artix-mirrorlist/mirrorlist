@@ -1,9 +1,13 @@
 ##
 ## Artix Linux repository mirrorlist
-## Generated on 2017-09-03
+## Generated on 2017-09-11
 ##
 
-## Worldwide
+# Artix mirrors
+
+Server = http://mirror1.artixlinux.org/artix-linux/repos/$repo/os/$arch
+
+## SF Worldwide
 Server = https://netcologne.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$arch
 Server = https://mirrors.dotsrc.org/artix-linux/repos/$repo/os/$arch
 Server = https://artix.mief.nl/repos/$repo/os/$arch
