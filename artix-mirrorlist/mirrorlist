@@ -6,6 +6,7 @@
 # Artix mirrors
 
 Server = http://mirror1.artixlinux.org/repos/$repo/os/$arch
+Server = http://mirror.strits.dk/artix-linux/repos/$repo/os/$arch
 
 ## SF Worldwide
 Server = https://netcologne.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$arch
